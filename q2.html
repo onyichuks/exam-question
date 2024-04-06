@@ -49,6 +49,20 @@
                             fillOpacity: fillOpacityValue
                         };
                     },
+                    onEachFeature: function (feature, layer) {
+                        // Format start date
+                        var startDate = new Date(feature.properties.startdate);
+                        var formattedDate = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                        
+                        // Bind popup with fire name, stage of control, and start date
+                        var popupContent = `<p>
+                            Fire Name: ${feature.properties.firename}<br/>
+                            Stage of Control: ${feature.properties.stage_of_control}<br/>
+                            Start Date: ${formattedDate}<br/>
+                            Size: ${feature.properties.hectares.toLocaleString()} Hectares
+                        </p>`;
+                        layer.bindPopup(popupContent);
+                    },
                                      
                     
                 }).addTo(map);
