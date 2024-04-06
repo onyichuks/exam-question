@@ -63,10 +63,22 @@
                         </p>`;
                         layer.bindPopup(popupContent);
                     },
-                                     
-                    
+                    pointToLayer: function (feature, latlng) {
+                        // Adjust point radius based on hectares
+                        var radiusValue = feature.properties.hectares > 0 ? Math.sqrt(feature.properties.hectares) * 2 : 1; // Increase size for visibility
+                        return L.circleMarker(latlng, {
+                            radius: radiusValue,
+                            fillColor: '#FF0000',
+                            color: '#000',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                    }
                 }).addTo(map);
-            
+            })
+            .catch(error => {
+                console.error('Error fetching the active fires data:', error);
             });
     </script>
 </body>
